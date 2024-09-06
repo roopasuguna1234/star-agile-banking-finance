@@ -23,6 +23,20 @@ pipeline {
                    sh 'docker build -t user977/banking-project-demo:1.0 .'
                          }
                     }
+                    stage('Docker-login') {
+                      steps {
+                        withCredentials([usernamePassword(credentialsId: 'Docker-login', passwordVariable: 'dockerpassword', usernameVariable: 'dockerlogin')]) {
+                        sh 'docker login -u ${docker-login} -p ${dockerpassword}'
+                                             }
+                                    }
+             
+                               }
+                               stage('Push-Image') {
+                                 steps {
+                                   sh 'docker push user977/banking-project-demo:1.0 .'
+                                          }
+                                     }
+
                     
     }
 }
