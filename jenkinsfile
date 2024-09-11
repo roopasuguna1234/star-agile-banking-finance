@@ -13,6 +13,16 @@ pipeline {
 
             }        
         }
+        stage('Generate Test Reports') {
+            steps {
+                publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: false, reportDir: '/var/lib/jenkins/workspace/Banking-finance/target/surefire-reports])
+                     }
+        }
+       stage('Create Docker Image') {
+           steps {
+               sh 'docker build -t roopa27/banking-project-demo:1.0 .'
+                }
+          }
     }
 }
 
